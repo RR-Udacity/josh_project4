@@ -1,0 +1,26 @@
+[project]
+name = ""
+version = ""
+description = ""
+authors = [
+    {name = "Josh Haines", email = "Josh@JoshHaines.com"},
+]
+dependencies = ["flask==1.1.2", "opencensus-ext-azure==1.0.4", "opencensus-ext-flask==0.7.3", "redis==3.5.3", "opencensus==0.7.13", "opencensus-ext-logging==0.1.0"]
+requires-python = ">=3.9"
+dynamic = ["classifiers"]
+license = {text = "MIT"}
+
+[project.urls]
+homepage = ""
+
+[build-system]
+requires = ["pdm-pep517"]
+build-backend = "pdm.pep517.api"
+
+
+[tool]
+[tool.pdm]
+[[tool.pdm.source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true

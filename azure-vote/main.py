@@ -9,7 +9,7 @@ from datetime import datetime
 
 # App Insights
 # TODO: Import required libraries for App Insights
-from opencensus.ext.azure.log_exporter import AzureLogHandler
+from opencensus.ext.azure.log_exporter import AzureLogHandler, AzureEventHandler
 from opencensus.ext.azure import metrics_exporter
 from opencensus.trace.tracer import Tracer
 from opencensus.ext.azure.trace_exporter import AzureExporter
@@ -18,6 +18,14 @@ from opencensus.ext.flask.flask_middleware import FlaskMiddleware
 
 # Logging
 logger = logging.getLogger(__name__)  # TODO: Setup logger
+handler = AzureLogHandler(
+    connection_string="InstrumentationKey=38f8c87d-735a-4b35-af38-59c71b3e8913;IngestionEndpoint=https://eastus-8.in.applicationinsights.azure.com/",
+)
+logger.addHandler(handler)
+logger.addHandler(AzureEventHandler(
+    connection_string="InstrumentationKey=38f8c87d-735a-4b35-af38-59c71b3e8913;IngestionEndpoint=https://eastus-8.in.applicationinsights.azure.com/",
+))
+logger.setLevel(logging.INFO)
 
 # Metrics
 # TODO: Setup exporter

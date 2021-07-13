@@ -23,14 +23,14 @@ logger = logging.getLogger(__name__)  # TODO: Setup logger
 # TODO: Setup exporter
 exporter = metrics_exporter.new_metrics_exporter(
     enable_standard_metrics=True,
-    connection_string="InstrumentationKey=InstrumentationKey=38f8c87d-735a-4b35-af38-59c71b3e8913;IngestionEndpoint=https://eastus-8.in.applicationinsights.azure.com/",
+    connection_string="InstrumentationKey=38f8c87d-735a-4b35-af38-59c71b3e8913;IngestionEndpoint=https://eastus-8.in.applicationinsights.azure.com/",
 )
 
 # Tracing
 # TODO: Setup tracer
 tracer = Tracer(
     exporter=AzureExporter(
-        connection_string="InstrumentationKey=InstrumentationKey=38f8c87d-735a-4b35-af38-59c71b3e8913;IngestionEndpoint=https://eastus-8.in.applicationinsights.azure.com/"
+        connection_string="InstrumentationKey=38f8c87d-735a-4b35-af38-59c71b3e8913;IngestionEndpoint=https://eastus-8.in.applicationinsights.azure.com/"
     ),
     sampler=ProbabilitySampler(1.0),
 )
@@ -42,7 +42,7 @@ app = Flask(__name__)
 middleware = FlaskMiddleware(
     app,
     exporter=AzureExporter(
-        connection_string="InstrumentationKey=InstrumentationKey=38f8c87d-735a-4b35-af38-59c71b3e8913;IngestionEndpoint=https://eastus-8.in.applicationinsights.azure.com/"
+        connection_string="InstrumentationKey=38f8c87d-735a-4b35-af38-59c71b3e8913;IngestionEndpoint=https://eastus-8.in.applicationinsights.azure.com/"
     ),
     sampler=ProbabilitySampler(rate=1.0),
 )

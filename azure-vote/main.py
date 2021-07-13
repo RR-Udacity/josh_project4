@@ -19,26 +19,28 @@ from opencensus.ext.flask.flask_middleware import FlaskMiddleware
 # Logging
 logger = logging.getLogger(__name__)  # TODO: Setup logger
 handler = AzureLogHandler(
-    connection_string="InstrumentationKey=38f8c87d-735a-4b35-af38-59c71b3e8913;IngestionEndpoint=https://eastus-8.in.applicationinsights.azure.com/",
+    connection_string="InstrumentationKey=38f8c87d-735a-4b35-af38-59c71b3e8913",
 )
 logger.addHandler(handler)
-logger.addHandler(AzureEventHandler(
-    connection_string="InstrumentationKey=38f8c87d-735a-4b35-af38-59c71b3e8913;IngestionEndpoint=https://eastus-8.in.applicationinsights.azure.com/",
-))
+logger.addHandler(
+    AzureEventHandler(
+        connection_string="InstrumentationKey=38f8c87d-735a-4b35-af38-59c71b3e8913",
+    )
+)
 logger.setLevel(logging.INFO)
 
 # Metrics
 # TODO: Setup exporter
 exporter = metrics_exporter.new_metrics_exporter(
     enable_standard_metrics=True,
-    connection_string="InstrumentationKey=38f8c87d-735a-4b35-af38-59c71b3e8913;IngestionEndpoint=https://eastus-8.in.applicationinsights.azure.com/",
+    connection_string="InstrumentationKey=38f8c87d-735a-4b35-af38-59c71b3e8913",
 )
 
 # Tracing
 # TODO: Setup tracer
 tracer = Tracer(
     exporter=AzureExporter(
-        connection_string="InstrumentationKey=38f8c87d-735a-4b35-af38-59c71b3e8913;IngestionEndpoint=https://eastus-8.in.applicationinsights.azure.com/"
+        connection_string="InstrumentationKey=38f8c87d-735a-4b35-af38-59c71b3e8913"
     ),
     sampler=ProbabilitySampler(1.0),
 )
@@ -50,7 +52,7 @@ app = Flask(__name__)
 middleware = FlaskMiddleware(
     app,
     exporter=AzureExporter(
-        connection_string="InstrumentationKey=38f8c87d-735a-4b35-af38-59c71b3e8913;IngestionEndpoint=https://eastus-8.in.applicationinsights.azure.com/"
+        connection_string="InstrumentationKey=38f8c87d-735a-4b35-af38-59c71b3e8913"
     ),
     sampler=ProbabilitySampler(rate=1.0),
 )
@@ -161,4 +163,4 @@ if __name__ == "__main__":
     # comment line below when deploying to VMSS
     # app.run() # local
     # uncomment the line below before deployment to VMSS
-    app.run(host='0.0.0.0', threaded=True, debug=True) # remote
+    app.run(host="0.0.0.0", threaded=True, debug=True)  # remote

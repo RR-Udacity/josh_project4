@@ -5,7 +5,15 @@ description = ""
 authors = [
     {name = "Josh Haines", email = "Josh@JoshHaines.com"},
 ]
-dependencies = ["flask==1.1.2", "opencensus-ext-azure==1.0.4", "opencensus-ext-flask==0.7.3", "redis==3.5.3", "opencensus==0.7.13", "opencensus-ext-logging==0.1.0"]
+dependencies = [
+    "flask==1.1.2",
+    "opencensus-ext-azure==1.0.4",
+    "opencensus-ext-flask==0.7.3",
+    "redis==3.5.3",
+    "opencensus==0.7.13",
+    "opencensus-ext-logging==0.1.0",
+    "python-dotenv~=0.18",
+]
 requires-python = ">=3.9"
 dynamic = ["classifiers"]
 license = {text = "MIT"}

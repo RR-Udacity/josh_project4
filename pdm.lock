@@ -191,6 +191,11 @@ requires_python = ">=2.6,!=3.0.*,!=3.1.*,!=3.2.*"
 summary = "Python parsing module"
 
 [[package]]
+name = "python-dotenv"
+version = "0.18.0"
+summary = "Read key-value pairs from a .env file and set them as environment variables"
+
+[[package]]
 name = "pytz"
 version = "2021.1"
 summary = "World timezone definitions, modern and historical"
@@ -248,7 +253,7 @@ summary = "The comprehensive WSGI web application library."
 
 [metadata]
 lock_version = "3"
-content_hash = "sha256:9e55961ac523aa0e1f3d51e4775f0cb3b8e69b5feecd818d701c41b26f2f8544"
+content_hash = "sha256:3e4c108b2bb9d26b1f88838bd8f016b8f1f5fac59937f59f56a0ce05a4cd47be"
 
 [metadata.files]
 "cachetools 4.2.2" = [
@@ -427,6 +432,10 @@ content_hash = "sha256:9e55961ac523aa0e1f3d51e4775f0cb3b8e69b5feecd818d701c41b26
 "pyparsing 2.4.7" = [
     {file = "pyparsing-2.4.7-py2.py3-none-any.whl", hash = "sha256:ef9d7589ef3c200abe66653d3f1ab1033c3c419ae9b9bdb1240a85b024efc88b"},
     {file = "pyparsing-2.4.7.tar.gz", hash = "sha256:c203ec8783bf771a155b207279b9bccb8dea02d8f0c9e5f8ead507bc3246ecc1"},
+]
+"python-dotenv 0.18.0" = [
+    {file = "python_dotenv-0.18.0-py2.py3-none-any.whl", hash = "sha256:dd8fe852847f4fbfadabf6183ddd4c824a9651f02d51714fa075c95561959c7d"},
+    {file = "python-dotenv-0.18.0.tar.gz", hash = "sha256:effaac3c1e58d89b3ccb4d04a40dc7ad6e0275fda25fd75ae9d323e2465e202d"},
 ]
 "pytz 2021.1" = [
     {file = "pytz-2021.1-py2.py3-none-any.whl", hash = "sha256:eb10ce3e7736052ed3623d49975ce333bcd712c7bb19a58b9e2089d4057d0798"},

@@ -9,7 +9,7 @@ from datetime import datetime
 
 # App Insights
 # TODO: Import required libraries for App Insights
-from opencensus.ext.azure.log_exporter import AzureLogHandler
+from opencensus.ext.azure.log_exporter import AzureLogHandler, AzureEventHandler
 from opencensus.ext.azure import metrics_exporter
 from opencensus.trace.tracer import Tracer
 from opencensus.ext.azure.trace_exporter import AzureExporter
@@ -18,19 +18,29 @@ from opencensus.ext.flask.flask_middleware import FlaskMiddleware
 
 # Logging
 logger = logging.getLogger(__name__)  # TODO: Setup logger
+handler = AzureLogHandler(
+    connection_string="InstrumentationKey=38f8c87d-735a-4b35-af38-59c71b3e8913",
+)
+logger.addHandler(handler)
+logger.addHandler(
+    AzureEventHandler(
+        connection_string="InstrumentationKey=38f8c87d-735a-4b35-af38-59c71b3e8913",
+    )
+)
+logger.setLevel(logging.INFO)
 
 # Metrics
 # TODO: Setup exporter
 exporter = metrics_exporter.new_metrics_exporter(
     enable_standard_metrics=True,
-    connection_string="InstrumentationKey=InstrumentationKey=38f8c87d-735a-4b35-af38-59c71b3e8913;IngestionEndpoint=https://eastus-8.in.applicationinsights.azure.com/",
+    connection_string="InstrumentationKey=38f8c87d-735a-4b35-af38-59c71b3e8913",
 )
 
 # Tracing
 # TODO: Setup tracer
 tracer = Tracer(
     exporter=AzureExporter(
-        connection_string="InstrumentationKey=InstrumentationKey=38f8c87d-735a-4b35-af38-59c71b3e8913;IngestionEndpoint=https://eastus-8.in.applicationinsights.azure.com/"
+        connection_string="InstrumentationKey=38f8c87d-735a-4b35-af38-59c71b3e8913"
     ),
     sampler=ProbabilitySampler(1.0),
 )
@@ -42,7 +52,7 @@ app = Flask(__name__)
 middleware = FlaskMiddleware(
     app,
     exporter=AzureExporter(
-        connection_string="InstrumentationKey=InstrumentationKey=38f8c87d-735a-4b35-af38-59c71b3e8913;IngestionEndpoint=https://eastus-8.in.applicationinsights.azure.com/"
+        connection_string="InstrumentationKey=38f8c87d-735a-4b35-af38-59c71b3e8913"
     ),
     sampler=ProbabilitySampler(rate=1.0),
 )
@@ -65,8 +75,23 @@ if "TITLE" in os.environ and os.environ["TITLE"]:
 else:
     title = app.config["TITLE"]
 
-# Redis Connection
-r = redis.Redis()
+# Comment/remove the next two lines of code.
+# Redis Connection to a local server running on the same machine where the current FLask app is running. 
+# r = redis.Redis()
+# Redis configurations
+redis_server = os.environ['REDIS']
+
+# Redis Connection to another container
+try:
+    if "REDIS_PWD" in os.environ:
+        r = redis.StrictRedis(host=redis_server,
+                        port=6379,
+                        password=os.environ['REDIS_PWD'])
+    else:
+        r = redis.Redis(redis_server)
+    r.ping()
+except redis.ConnectionError:
+    exit('Failed to connect to Redis, terminating.')
 
 # Change title to host name to demo NLB
 if app.config["SHOWHOST"] == "true":
@@ -153,4 +178,4 @@ if __name__ == "__main__":
     # comment line below when deploying to VMSS
     # app.run() # local
     # uncomment the line below before deployment to VMSS
-    app.run(host='0.0.0.0', threaded=True, debug=True) # remote
+    app.run(host="0.0.0.0", threaded=True, debug=True)  # remote
